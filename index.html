@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PlanPro — Productivity App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app" data-theme="light">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">PP</div>
+        <div>
+          <h1 class="title">PlanPro</h1>
+          <div class="subtitle">Minimal • Pastel • Animated</div>
+        </div>
+      </div>
+      <div class="controls">
+        <div id="welcomeMsg" class="muted">Not signed in</div>
+        <div id="themeToggle" class="toggle" title="Toggle dark/light">🌙 <span id="themeLabel">Dark</span></div>
+        <button id="logoutBtn" class="btn small" style="display:none">Logout</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <aside class="left">
+        <div class="card profile-card">
+          <div class="profile">
+            <div id="avatar" class="avatar">G</div>
+            <div>
+              <div id="userNameLarge" class="username">Guest</div>
+              <div class="muted">PlanPro account • Tasks saved locally</div>
+            </div>
+          </div>
+
+          <div id="authArea" class="auth">
+            <div class="muted">Sign in or create a local account</div>
+            <div class="auth-row">
+              <input id="usernameInput" class="input" type="text" placeholder="Enter username" />
+              <button id="signinBtn" class="btn">Sign In</button>
+            </div>
+            <div class="muted small">Tip: use a single-word username. No password for this demo.</div>
+          </div>
+
+          <div id="taskControls" class="hidden">
+            <h3 class="section-title">Add Task</h3>
+            <div class="row">
+              <input id="taskTitle" class="input" placeholder="Task title" />
+              <select id="taskCategory" class="select">
+                <option value="study">📚 Study</option>
+                <option value="work">💼 Work</option>
+                <option value="personal">💖 Personal</option>
+                <option value="health">🏃 Health</option>
+                <option value="other">✨ Other</option>
+              </select>
+            </div>
+            <div class="row">
+              <textarea id="taskNote" class="textarea" placeholder="Notes (optional)"></textarea>
+            </div>
+            <div class="row">
+              <input id="taskDate" class="input" type="date" />
+              <select id="taskPriority" class="select">
+                <option value="low">Low 🔵</option>
+                <option value="medium" selected>Medium 🟠</option>
+                <option value="high">High 🔴</option>
+              </select>
+            </div>
+            <div class="row" style="justify-content:space-between;align-items:center">
+              <div>
+                <button id="addTaskBtn" class="btn">Add Task</button>
+                <button id="clearDoneBtn" class="btn small">Clear Done</button>
+              </div>
+              <div class="emoji-picker">
+                <div class="chip" data-cat="study">📚 Study</div>
+                <div class="chip" data-cat="work">💼 Work</div>
+                <div class="chip" data-cat="personal">💖 Personal</div>
+                <div class="chip" data-cat="health">🏃 Health</div>
+                <div class="chip" data-cat="other">✨ Other</div>
+              </div>
+            </div>
+
+            <h3 class="section-title">Tasks</h3>
+            <div id="taskList" class="task-list muted">No tasks yet — add one!</div>
+
+            <div class="row" style="margin-top:20px;justify-content:space-between">
+              <button id="backupBtn" class="btn small">⬇️ Backup</button>
+              <input type="file" id="restoreInput" style="display:none" accept="application/json" />
+              <button id="restoreBtn" class="btn small">⬆️ Restore</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card journal-card">
+          <h3 class="section-title">Journal</h3>
+          <textarea id="journalTxt" class="textarea" placeholder="Write a short journal entry... (saved locally)"></textarea>
+          <div class="row" style="justify-content:space-between;align-items:center">
+            <div class="muted small">Daily notes</div>
+            <div>
+              <button id="saveJournal" class="btn small">Save</button>
+              <button id="clearJournal" class="btn small">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar (single instance) -->
+        <div class="card calendar-card">
+          <h3 class="section-title">Calendar</h3>
+          <div id="calendarMonth" class="muted"></div>
+          <div id="calendar" class="calendar-grid"></div>
+        </div>
+
+        <!-- Upcoming tasks (single instance) -->
+        <div class="card upcoming-card">
+          <h3 class="section-title">Upcoming Tasks</h3>
+          <div id="upcomingList" class="task-list muted">No upcoming tasks</div>
+        </div>
+      </aside>
+
+      <section class="right">
+        <div class="card chart-card">
+          <div class="row" style="justify-content:space-between;align-items:center">
+            <div>
+              <div class="muted">Progress</div>
+              <h3 id="progressLabel">0 of 0 tasks completed</h3>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="progressChart"></canvas></div>
+        </div>
+
+        <div class="card quote-card">
+          <h3 class="section-title">Motivation</h3>
+          <div id="quote" class="muted quote-text">Loading quote...</div>
+          <div class="row" style="margin-top:10px">
+            <button id="newQuote" class="btn small">New</button>
+            <button id="copyQuote" class="btn small" id="copyQuoteBtn">Copy</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">Made with ❤️ • PlanPro — local demo. Data saved in your browser.</footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
